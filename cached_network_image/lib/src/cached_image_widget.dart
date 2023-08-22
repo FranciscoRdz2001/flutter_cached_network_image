@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -234,14 +233,11 @@ class CachedNetworkImage extends StatelessWidget {
     this.cacheKey,
     this.maxWidthDiskCache,
     this.maxHeightDiskCache,
-    ImageRenderMethodForWeb imageRenderMethodForWeb =
-        ImageRenderMethodForWeb.HtmlImage,
   })  : _image = CachedNetworkImageProvider(
           imageUrl,
           headers: httpHeaders,
           cacheManager: cacheManager,
           cacheKey: cacheKey,
-          imageRenderMethodForWeb: imageRenderMethodForWeb,
           maxWidth: maxWidthDiskCache,
           maxHeight: maxHeightDiskCache,
         ),

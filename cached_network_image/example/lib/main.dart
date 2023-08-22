@@ -1,21 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:baseflow_plugin_template/baseflow_plugin_template.dart';
-import 'package:flutter_blurhash/flutter_blurhash.dart';
 
 void main() {
   CachedNetworkImage.logLevel = CacheManagerLogLevel.debug;
 
-  runApp(BaseflowPluginExample(
-    pluginName: 'CachedNetworkImage',
-    githubURL: 'https://github.com/Baseflow/flutter_cache_manager',
-    pubDevURL: 'https://pub.dev/packages/flutter_cache_manager',
-    pages: [
-      BasicContent.createPage(),
-      ListContent.createPage(),
-      GridContent.createPage(),
-    ],
+  runApp(MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: const Text('CachedNetworkImage Example'),
+      ),
+      body: const Center(
+        child: GridContent(),
+      ),
+    ),
   ));
+  return;
 }
 
 /// Demonstrates a [StatelessWidget] containing [CachedNetworkImage]
@@ -33,7 +33,6 @@ class BasicContent extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _blurHashImage(),
             _sizedContainer(
               const Image(
                 image: CachedNetworkImageProvider(
@@ -123,20 +122,6 @@ class BasicContent extends StatelessWidget {
     );
   }
 
-  Widget _blurHashImage() {
-    return SizedBox(
-      width: double.infinity,
-      child: CachedNetworkImage(
-        placeholder: (context, url) => const AspectRatio(
-          aspectRatio: 1.6,
-          child: BlurHash(hash: 'LEHV6nWB2yk8pyo0adR*.7kCMdnj'),
-        ),
-        imageUrl: 'https://blurha.sh/assets/images/img1.jpg',
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
   Widget _sizedContainer(Widget child) {
     return SizedBox(
       width: 300.0,
@@ -178,6 +163,12 @@ class ListContent extends StatelessWidget {
 
 /// Demonstrates a [GridView] containing [CachedNetworkImage]
 class GridContent extends StatelessWidget {
+  static const _invalidsUrls = [
+    'https://notAvalid.uri',
+    'not a uri at all',
+    'https://via.placeholder.com/300x300',
+    'https://via.placeholder.com/350x200',
+  ];
   const GridContent({Key? key}) : super(key: key);
 
   static ExamplePage createPage() {
@@ -191,7 +182,7 @@ class GridContent extends StatelessWidget {
       gridDelegate:
           const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: (BuildContext context, int index) => CachedNetworkImage(
-        imageUrl: 'https://loremflickr.com/100/100/music?lock=$index',
+        imageUrl: _invalidsUrls[index % _invalidsUrls.length],
         placeholder: _loader,
         errorWidget: _error,
       ),

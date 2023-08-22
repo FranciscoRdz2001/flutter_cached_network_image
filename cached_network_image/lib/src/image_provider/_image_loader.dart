@@ -1,21 +1,13 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'dart:ui';
 
-import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-import 'package:cached_network_image_platform_interface'
-        '/cached_network_image_platform_interface.dart' as platform
-    show ImageLoader;
-import 'package:cached_network_image_platform_interface'
-        '/cached_network_image_platform_interface.dart'
-    show ImageRenderMethodForWeb;
-
 /// ImageLoader class to load images on IO platforms.
-class ImageLoader implements platform.ImageLoader {
+class ImageLoader {
   @Deprecated('use loadBufferAsync instead')
   @override
   Stream<ui.Codec> loadAsync(
@@ -28,7 +20,6 @@ class ImageLoader implements platform.ImageLoader {
     int? maxWidth,
     Map<String, String>? headers,
     Function()? errorListener,
-    ImageRenderMethodForWeb imageRenderMethodForWeb,
     Function() evictImage,
   ) {
     return _load(
@@ -41,7 +32,6 @@ class ImageLoader implements platform.ImageLoader {
       maxWidth,
       headers,
       errorListener,
-      imageRenderMethodForWeb,
       evictImage,
     );
   }
@@ -57,7 +47,6 @@ class ImageLoader implements platform.ImageLoader {
       int? maxWidth,
       Map<String, String>? headers,
       Function()? errorListener,
-      ImageRenderMethodForWeb imageRenderMethodForWeb,
       Function() evictImage) {
     return _load(
       url,
@@ -72,7 +61,6 @@ class ImageLoader implements platform.ImageLoader {
       maxWidth,
       headers,
       errorListener,
-      imageRenderMethodForWeb,
       evictImage,
     );
   }
@@ -87,7 +75,6 @@ class ImageLoader implements platform.ImageLoader {
     int? maxWidth,
     Map<String, String>? headers,
     Function()? errorListener,
-    ImageRenderMethodForWeb imageRenderMethodForWeb,
     Function() evictImage,
   ) async* {
     try {
@@ -130,6 +117,7 @@ class ImageLoader implements platform.ImageLoader {
         evictImage();
       });
 
+      print('Test platform exception 2');
       errorListener?.call();
       rethrow;
     } finally {
