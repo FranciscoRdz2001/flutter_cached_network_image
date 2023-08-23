@@ -12,8 +12,9 @@ dependencies:
   flutter_cache_manager:
     git:
       url: git@github.com:FranciscoRdz2001/flutter_cache_manager.git
-      ref: 5ba89c6b3f7f9dee60981e609d8e773ebeee1c6a
+      ref: e8d1d8319ff86c7ff52019147836cf9224ea9082
       path: flutter_cache_manager
+
   octo_image: ^1.0.0
   cached_network_image_platform_interface:
     path: ../cached_network_image_platform_interface

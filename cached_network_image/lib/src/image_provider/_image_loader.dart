@@ -117,7 +117,6 @@ class ImageLoader {
         evictImage();
       });
 
-      print('Test platform exception 2');
       errorListener?.call();
       rethrow;
     } finally {

@@ -163,12 +163,6 @@ class ListContent extends StatelessWidget {
 
 /// Demonstrates a [GridView] containing [CachedNetworkImage]
 class GridContent extends StatelessWidget {
-  static const _invalidsUrls = [
-    'https://notAvalid.uri',
-    'not a uri at all',
-    'https://via.placeholder.com/300x300',
-    'https://via.placeholder.com/350x200',
-  ];
   const GridContent({Key? key}) : super(key: key);
 
   static ExamplePage createPage() {
@@ -182,7 +176,8 @@ class GridContent extends StatelessWidget {
       gridDelegate:
           const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
       itemBuilder: (BuildContext context, int index) => CachedNetworkImage(
-        imageUrl: _invalidsUrls[index % _invalidsUrls.length],
+        imageUrl:
+            'https://cdn.taecel.com/src/app/assets/img/carriers/logo-nettv.png%0A',
         placeholder: _loader,
         errorWidget: _error,
       ),

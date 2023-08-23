@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -245,43 +247,51 @@ class CachedNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var octoPlaceholderBuilder =
-        placeholder != null ? _octoPlaceholderBuilder : null;
-    var octoProgressIndicatorBuilder =
-        progressIndicatorBuilder != null ? _octoProgressIndicatorBuilder : null;
+    try {
+      var octoPlaceholderBuilder =
+          placeholder != null ? _octoPlaceholderBuilder : null;
+      var octoProgressIndicatorBuilder = progressIndicatorBuilder != null
+          ? _octoProgressIndicatorBuilder
+          : null;
 
-    ///If there is no placeholer OctoImage does not fade, so always set an
-    ///(empty) placeholder as this always used to be the behaviour of
-    ///CachedNetworkImage.
-    if (octoPlaceholderBuilder == null &&
-        octoProgressIndicatorBuilder == null) {
-      octoPlaceholderBuilder = (context) => Container();
+      ///If there is no placeholer OctoImage does not fade, so always set an
+      ///(empty) placeholder as this always used to be the behaviour of
+      ///CachedNetworkImage.
+      if (octoPlaceholderBuilder == null &&
+          octoProgressIndicatorBuilder == null) {
+        octoPlaceholderBuilder = (context) => Container();
+      }
+
+      return OctoImage(
+        image: _image,
+        imageBuilder: imageBuilder != null ? _octoImageBuilder : null,
+        placeholderBuilder: octoPlaceholderBuilder,
+        progressIndicatorBuilder: octoProgressIndicatorBuilder,
+        errorBuilder: errorWidget != null ? _octoErrorBuilder : null,
+        fadeOutDuration: fadeOutDuration,
+        fadeOutCurve: fadeOutCurve,
+        fadeInDuration: fadeInDuration,
+        fadeInCurve: fadeInCurve,
+        width: width,
+        height: height,
+        fit: fit,
+        alignment: alignment,
+        repeat: repeat,
+        matchTextDirection: matchTextDirection,
+        color: color,
+        filterQuality: filterQuality,
+        colorBlendMode: colorBlendMode,
+        placeholderFadeInDuration: placeholderFadeInDuration,
+        gaplessPlayback: useOldImageOnUrlChange,
+        memCacheWidth: memCacheWidth,
+        memCacheHeight: memCacheHeight,
+      );
+    } catch (e) {
+      log('Error in CachedNetworkImage build method: $e');
+      return errorWidget != null
+          ? _octoErrorBuilder(context, e, null)
+          : const SizedBox();
     }
-
-    return OctoImage(
-      image: _image,
-      imageBuilder: imageBuilder != null ? _octoImageBuilder : null,
-      placeholderBuilder: octoPlaceholderBuilder,
-      progressIndicatorBuilder: octoProgressIndicatorBuilder,
-      errorBuilder: errorWidget != null ? _octoErrorBuilder : null,
-      fadeOutDuration: fadeOutDuration,
-      fadeOutCurve: fadeOutCurve,
-      fadeInDuration: fadeInDuration,
-      fadeInCurve: fadeInCurve,
-      width: width,
-      height: height,
-      fit: fit,
-      alignment: alignment,
-      repeat: repeat,
-      matchTextDirection: matchTextDirection,
-      color: color,
-      filterQuality: filterQuality,
-      colorBlendMode: colorBlendMode,
-      placeholderFadeInDuration: placeholderFadeInDuration,
-      gaplessPlayback: useOldImageOnUrlChange,
-      memCacheWidth: memCacheWidth,
-      memCacheHeight: memCacheHeight,
-    );
   }
 
   Widget _octoImageBuilder(BuildContext context, Widget child) {
